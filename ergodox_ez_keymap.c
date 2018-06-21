@@ -1,4 +1,4 @@
-#include "ergodox_ez.h"
+#include QMK_KEYBOARD_H
 #include "debug.h"
 #include "action_layer.h"
 
@@ -18,7 +18,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
  * | LShift |   Z  |   X  |   C  |   V  |   B  | EISU |           | KANA |   N  |   M  | ,  < | .  > | /  ? | RShift |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |Ctl/Esc| Alt |  L1  | F13  | F14  |                                       | Up   | Down | [  { | ]  } | L2 \ |
+ *   |Ctl/Esc| Alt |  L1  | HENK | MHEN |                                       | Up   | Down | [  { | ]  } | L2 \ |
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,---------------.
  *                                        | Left | Right|       | Left | Right  |
@@ -33,13 +33,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 // If it accepts an argument (i.e, is a function), it doesn't need KC_.
 // Otherwise, it needs KC_*
-[BASE] = KEYMAP(  // layer 0 : default
+[BASE] = LAYOUT_ergodox(  // layer 0 : default
         // left hand
         KC_EQL,        KC_1,         KC_2,   KC_3,   KC_4,   KC_5,   KC_BSLS,
         KC_TAB,        KC_Q,         KC_W,   KC_E,   KC_R,   KC_T,   KC_GRV,
         KC_LGUI,       KC_A,         KC_S,   KC_D,   KC_F,   KC_G,
         KC_LSFT,       KC_Z,         KC_X,   KC_C,   KC_V,   KC_B,   KC_LANG2,
-        CTL_T(KC_ESC), KC_LALT,    LT(SYMB,KC_NO),  KC_F13,  KC_F14,
+        CTL_T(KC_ESC), KC_LALT,    LT(SYMB,KC_NO),  KC_HENK,  KC_MHEN,
                                                        KC_LEFT,  KC_RIGHT,
                                                               KC_PGUP,
                                                KC_SPC,KC_BSPC, KC_PGDN,
@@ -75,7 +75,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                 `--------------------'       `--------------------'
  */
 // SYMBOLS
-[SYMB] = KEYMAP(
+[SYMB] = LAYOUT_ergodox(
        // left hand
        KC_TRNS,KC_F1,  KC_F2,  KC_F3,  KC_F4,   KC_F5,  KC_TRNS,
        KC_TRNS,KC_TRNS,KC_TRNS,KC_END, KC_TRNS, KC_TRNS,KC_TRNS,
@@ -117,7 +117,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                 `--------------------'       `--------------------'
  */
 // MEDIA AND MOUSE
-[MDIA] = KEYMAP(
+[MDIA] = LAYOUT_ergodox(
        RESET,   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
        KC_TRNS, KC_TRNS, KC_TRNS, KC_MS_U, KC_TRNS, KC_TRNS, KC_TRNS,
        KC_TRNS, KC_TRNS, KC_MS_L, KC_MS_D, KC_MS_R, KC_TRNS,
