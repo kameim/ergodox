@@ -5,13 +5,12 @@
 #define SYMB 1 // symbols
 #define MDIA 2 // media keys
 
-enum custom_keycodes
-{
-#ifdef ORYX_CONFIGURATOR
+enum custom_keycodes {
+  #ifdef ORYX_CONFIGURATOR
     EPRM = EZ_SAFE_RANGE,
-#else
+  #else
     EPRM = SAFE_RANGE,
-#endif
+  #endif
     VRSN,
     RGB_SLD
 };
@@ -96,7 +95,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TRNS, KC_DOT, KC_0, KC_EQL, KC_TRNS,
         RGB_TOG, RGB_SLD,
         KC_TRNS,
-        KC_TRNS, RGB_HUD, RGB_HUI),
+        KC_TRNS, RGB_HUD, RGB_HUI
+),
     /* Keymap 2: Media and mouse keys
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
@@ -136,109 +136,104 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_VOLU, KC_VOLD, KC_MUTE, KC_TRNS, KC_TRNS,
         KC_TRNS, KC_TRNS,
         KC_TRNS,
-        KC_TRNS, KC_TRNS, KC_WBAK),
+        KC_TRNS, KC_TRNS, KC_WBAK
+),
 };
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record)
-{
-    if (record->event.pressed)
-    {
-        switch (keycode)
-        {
-        case EPRM:
-            eeconfig_init();
-            return false;
-        case VRSN:
-            SEND_STRING(QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION);
-            return false;
-#ifdef RGBLIGHT_ENABLE
-        case RGB_SLD:
-            rgblight_mode(1);
-            return false;
-#endif
-        }
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  if (record->event.pressed) {
+    switch (keycode) {
+      case EPRM:
+        eeconfig_init();
+        return false;
+      case VRSN:
+        SEND_STRING (QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION);
+        return false;
+      #ifdef RGBLIGHT_ENABLE
+      case RGB_SLD:
+        rgblight_mode(1);
+        return false;
+      #endif
     }
-    return true;
+  }
+  return true;
 }
 
 // Runs just one time when the keyboard initializes.
-void matrix_init_user(void)
-{
+void matrix_init_user(void) {
 #ifdef RGBLIGHT_COLOR_LAYER_0
-    rgblight_setrgb(RGBLIGHT_COLOR_LAYER_0);
+  rgblight_setrgb(RGBLIGHT_COLOR_LAYER_0);
 #endif
 };
 
 // Runs whenever there is a layer state change.
-layer_state_t layer_state_set_user(layer_state_t state)
-{
-    ergodox_board_led_off();
-    ergodox_right_led_1_off();
-    ergodox_right_led_2_off();
-    ergodox_right_led_3_off();
+uint32_t layer_state_set_user(uint32_t state) {
+  ergodox_board_led_off();
+  ergodox_right_led_1_off();
+  ergodox_right_led_2_off();
+  ergodox_right_led_3_off();
 
-    uint8_t layer = get_highest_layer(state);
-    switch (layer)
-    {
-    case 0:
-#ifdef RGBLIGHT_COLOR_LAYER_0
-        rgblight_setrgb(RGBLIGHT_COLOR_LAYER_0);
-#else
-#ifdef RGBLIGHT_ENABLE
-        rgblight_init();
-#endif
-#endif
+  uint8_t layer = biton32(state);
+  switch (layer) {
+      case 0:
+        #ifdef RGBLIGHT_COLOR_LAYER_0
+          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_0);
+        #else
+        #ifdef RGBLIGHT_ENABLE
+          rgblight_init();
+        #endif
+        #endif
         break;
-    case 1:
+      case 1:
         ergodox_right_led_1_on();
-#ifdef RGBLIGHT_COLOR_LAYER_1
-        rgblight_setrgb(RGBLIGHT_COLOR_LAYER_1);
-#endif
+        #ifdef RGBLIGHT_COLOR_LAYER_1
+          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_1);
+        #endif
         break;
-    case 2:
+      case 2:
         ergodox_right_led_2_on();
-#ifdef RGBLIGHT_COLOR_LAYER_2
-        rgblight_setrgb(RGBLIGHT_COLOR_LAYER_2);
-#endif
+        #ifdef RGBLIGHT_COLOR_LAYER_2
+          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_2);
+        #endif
         break;
-    case 3:
+      case 3:
         ergodox_right_led_3_on();
-#ifdef RGBLIGHT_COLOR_LAYER_3
-        rgblight_setrgb(RGBLIGHT_COLOR_LAYER_3);
-#endif
+        #ifdef RGBLIGHT_COLOR_LAYER_3
+          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_3);
+        #endif
         break;
-    case 4:
-        ergodox_right_led_1_on();
-        ergodox_right_led_2_on();
-#ifdef RGBLIGHT_COLOR_LAYER_4
-        rgblight_setrgb(RGBLIGHT_COLOR_LAYER_4);
-#endif
-        break;
-    case 5:
-        ergodox_right_led_1_on();
-        ergodox_right_led_3_on();
-#ifdef RGBLIGHT_COLOR_LAYER_5
-        rgblight_setrgb(RGBLIGHT_COLOR_LAYER_5);
-#endif
-        break;
-    case 6:
-        ergodox_right_led_2_on();
-        ergodox_right_led_3_on();
-#ifdef RGBLIGHT_COLOR_LAYER_6
-        rgblight_setrgb(RGBLIGHT_COLOR_LAYER_6);
-#endif
-        break;
-    case 7:
+      case 4:
         ergodox_right_led_1_on();
         ergodox_right_led_2_on();
-        ergodox_right_led_3_on();
-#ifdef RGBLIGHT_COLOR_LAYER_7
-        rgblight_setrgb(RGBLIGHT_COLOR_LAYER_7);
-#endif
+        #ifdef RGBLIGHT_COLOR_LAYER_4
+          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_4);
+        #endif
         break;
-    default:
+      case 5:
+        ergodox_right_led_1_on();
+        ergodox_right_led_3_on();
+        #ifdef RGBLIGHT_COLOR_LAYER_5
+          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_5);
+        #endif
+        break;
+      case 6:
+        ergodox_right_led_2_on();
+        ergodox_right_led_3_on();
+        #ifdef RGBLIGHT_COLOR_LAYER_6
+          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_6);
+        #endif
+        break;
+      case 7:
+        ergodox_right_led_1_on();
+        ergodox_right_led_2_on();
+        ergodox_right_led_3_on();
+        #ifdef RGBLIGHT_COLOR_LAYER_7
+          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_7);
+        #endif
+        break;
+      default:
         break;
     }
 
-    return state;
+  return state;
 };
