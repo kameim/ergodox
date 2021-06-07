@@ -15,4 +15,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: hex
-          path: ./dists
+          path: ./dists/ergodox_ez_default.hex
